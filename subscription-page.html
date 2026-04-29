@@ -624,7 +624,7 @@
         </p>
 
         <div class="price-block">
-          <span class="price-currency">$</span>
+          <span class="price-currency">PHP</span>
           <span class="price-amount"> 20 </span>
           <span class="price-period">/ month</span>
         </div>
@@ -790,7 +790,7 @@
 
           <button class="btn" id="pay-btn" onclick="handlePay()">
             <div class="spinner"></div>
-            <span class="btn-text">Pay $20 via XendIt →</span>
+            <span class="btn-text">Pay PHP20 via XendIt →</span>
           </button>
 
           <button class="btn-ghost" onclick="showStep('step-email')">
@@ -1004,13 +1004,9 @@
             throw new Error(data.message || "No checkout URL returned");
           }
         } catch (err) {
-          // Fallback: if REGISTER_URL isn't set up yet, show a placeholder alert
           console.error("REGISTER_URL error:", err);
-          // ── TEMPORARY: remove this block once n8n webhook is live ──
-          alert(
-            '⚠️ The payment webhook is not configured yet.\n\nOnce your n8n "register-premium" webhook is live, users will be redirected to XendIt here.\n\nEndpoint to configure: ' +
-              REGISTER_URL,
-          );
+          showAlert("email-alert", "error", "Something went wrong", "Could not connect to payment service. Please try again.");
+          showStep("step-email");
         }
 
         setLoading(
