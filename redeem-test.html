@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redeem Access Key — LeadX</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f7faf8;
+        --surface: #ffffff;
+        --surface-2: #eff5f2;
+        --left-bg: #0d2818;
+        --border: #ddeae3;
+        --border-dark: #1e3d2a;
+        --text: #0d1f14;
+        --text-inv: #e8f5ee;
+        --muted: #5a7a66;
+        --muted-inv: #7aaa8a;
+        --blue: #1d6fa4;
+        --blue-light: #e8f3fb;
+        --blue-dim: rgba(29, 111, 164, 0.12);
+        --error: #c0392b;
+        --error-light: #fdf0ee;
+        --success: #1a7a45;
+        --success-light: #e6f7ed;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 420px 1fr;
+      }
+      .left {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 48px 44px;
+        background: var(--left-bg);
+        overflow: hidden;
+      }
+      .left::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(26, 92, 53, 0.55) 0%,
+          transparent 65%
+        );
+        top: -180px;
+        left: -180px;
+        pointer-events: none;
+      }
+      .left::after {
+        content: "";
+        position: absolute;
+        width: 360px;
+        height: 360px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(29, 111, 164, 0.18) 0%,
+          transparent 60%
+        );
+        bottom: -80px;
+        right: -80px;
+        pointer-events: none;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 1;
+      }
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        background: var(--blue);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        font-size: 16px;
+        font-weight: 900;
+        color: #fff;
+      }
+      .brand-name {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-inv);
+      }
+      .left-content {
+        position: relative;
+        z-index: 1;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-inv);
+        margin-bottom: 22px;
+      }
+      .eyebrow-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #6ec6f5;
+      }
+      h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(32px, 3vw, 44px);
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: var(--text-inv);
+        margin-bottom: 18px;
+      }
+      h1 em {
+        font-style: italic;
+        font-weight: 700;
+        color: #6ec6f5;
+      }
+      .left-desc {
+        font-size: 14px;
+        color: var(--muted-inv);
+        line-height: 1.75;
+        margin-bottom: 36px;
+      }
+      .info-box {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-dark);
+        border-radius: 12px;
+        padding: 20px 22px;
+      }
+      .info-box-title {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6ec6f5;
+        margin-bottom: 14px;
+      }
+      .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: var(--muted-inv);
+        line-height: 1.5;
+      }
+      .info-item:last-child {
+        margin-bottom: 0;
+      }
+      .info-arrow {
+        color: #6ec6f5;
+        flex-shrink: 0;
+        font-size: 11px;
+        margin-top: 2px;
+      }
+      .left-footer {
+        font-size: 12px;
+        color: rgba(122, 170, 138, 0.45);
+        position: relative;
+        z-index: 1;
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 64px;
+        overflow-y: auto;
+        background: var(--bg);
+      }
+      .form-container {
+        width: 100%;
+        max-width: 440px;
+        animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .form-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--blue-light);
+        color: var(--blue);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .form-title {
+        font-family: "Fraunces", serif;
+        font-size: 30px;
+        font-weight: 900;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .form-sub {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+      .form-sub a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .form-sub a:hover {
+        text-decoration: underline;
+      }
+      .field {
+        margin-bottom: 18px;
+      }
+      .field label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 7px;
+      }
+      .field input {
+        width: 100%;
+        padding: 13px 16px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .field input.key-input {
+        font-family: "DM Mono", monospace;
+        font-size: 16px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+      .field input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px var(--blue-dim);
+      }
+      .field input::placeholder {
+        color: #b8c8be;
+      }
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 20px 0;
+      }
+      .section-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .btn:hover:not(:disabled) {
+        background: #186091;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(29, 111, 164, 0.28);
+      }
+      .btn:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .btn.loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .btn-ghost {
+        width: 100%;
+        padding: 13px;
+        background: transparent;
+        color: var(--muted);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-ghost:hover {
+        border-color: var(--muted);
+        color: var(--text);
+      }
+      .spinner {
+        width: 15px;
+        height: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+      }
+      .btn.loading .spinner {
+        display: block;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .alert {
+        display: none;
+        padding: 13px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 18px;
+      }
+      .alert.error {
+        background: var(--error-light);
+        border: 1.5px solid rgba(192, 57, 43, 0.2);
+        color: #a93226;
+      }
+      .alert.show {
+        display: block;
+        animation: fadeUp 0.2s ease both;
+      }
+
+      /* Success state */
+      .success-state {
+        display: none;
+        text-align: center;
+        padding: 24px 0;
+        animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .success-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--success-light);
+        border: 2px solid rgba(26, 122, 69, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin: 0 auto 20px;
+      }
+      .success-title {
+        font-family: "Fraunces", serif;
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: 10px;
+      }
+      .success-body {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.65;
+        max-width: 320px;
+        margin: 0 auto 24px;
+      }
+      .trial-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        text-align: left;
+        margin-bottom: 24px;
+      }
+      .trial-item {
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
+      }
+      .trial-item.full {
+        grid-column: 1 / -1;
+      }
+      .trial-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .trial-value {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        word-break: break-all;
+      }
+      .trial-value.mono {
+        font-family: "DM Mono", monospace;
+        font-size: 12px;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        background: var(--success-light);
+        color: var(--success);
+        border: 1px solid rgba(26, 122, 69, 0.2);
+      }
+      .status-pill::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--success);
+      }
+      .success-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer-note {
+        margin-top: 22px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .footer-note a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .footer-note a:hover {
+        text-decoration: underline;
+      }
+      @media (max-width: 860px) {
+        body {
+          grid-template-columns: 1fr;
+        }
+        .left {
+          display: none;
+        }
+        .right {
+          padding: 40px 24px;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left">
+      <div class="brand">
+        <div class="brand-mark">L</div>
+        <span class="brand-name">LeadX</span>
+      </div>
+      <div class="left-content">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>Activate trial
+        </div>
+        <h1>You're one step<br /><em>away.</em></h1>
+        <p class="left-desc">
+          Enter your access key and create a password to start your 14-day LeadX
+          trial. Your key was sent in your approval email.
+        </p>
+        <div class="info-box">
+          <div class="info-box-title">Before you begin</div>
+          <div class="info-item">
+            <span class="info-arrow">→</span>Your key format:
+            <strong
+              style="
+                color: var(--text-inv);
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: 12px;
+                margin-left: 4px;
+              "
+              >TRL-XXXX-XXXX-XXXX</strong
+            >
+          </div>
+          <div class="info-item">
+            <span class="info-arrow">→</span>Use the exact email from your
+            approval
+          </div>
+          <div class="info-item">
+            <span class="info-arrow">→</span>Your password is used to sign in
+            going forward
+          </div>
+          <div class="info-item">
+            <span class="info-arrow">→</span>Each key can only be redeemed once
+          </div>
+        </div>
+      </div>
+      <div class="left-footer">© 2026 LeadX. All rights reserved.</div>
+    </div>
+
+    <div class="right">
+      <div class="form-container">
+        <!-- Form -->
+        <div id="formSection">
+          <div class="form-kicker">✦ First time here</div>
+          <div class="form-title">Activate your key</div>
+          <p class="form-sub">
+            Already activated? <a href="access-page.html">Sign in instead</a>
+          </p>
+          <div class="alert" id="alertBox"></div>
+          <div class="field">
+            <label>Access Key</label>
+            <input
+              class="key-input"
+              type="text"
+              id="keyInput"
+              placeholder="TRL-XXXX-XXXX-XXXX"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="emailInput"
+              placeholder="jane@company.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="divider"></div>
+          <div class="section-label">Create your password</div>
+          <div class="field">
+            <label>Password</label>
+            <input
+              type="password"
+              id="passwordInput"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+            />
+          </div>
+          <div class="field">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              id="confirmInput"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+            />
+          </div>
+          <button class="btn" id="submitBtn" onclick="handleRedeem()">
+            <div class="spinner"></div>
+            <span class="btn-text">Activate Trial</span>
+          </button>
+          <a class="btn-ghost" href="access-page.html">← Back to sign in</a>
+        </div>
+
+        <!-- Success State -->
+        <div class="success-state" id="successState">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Trial activated!</div>
+          <p class="success-body" id="successBody">
+            Your trial is now active. Redirecting you to the app...
+          </p>
+          <div class="trial-grid" id="trialGrid"></div>
+          <div class="success-actions">
+            <a class="btn" id="goToAppBtn" href="#" onclick="goToApp(event)"
+              >Go to app now →</a
+            >
+            <a class="btn-ghost" href="access-page.html">← Back to sign in</a>
+          </div>
+        </div>
+
+        <p class="footer-note">
+          Need help? <a href="mailto:agnlaudes@gmail.com">Contact support</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const REDEEM_URL =
+        "https://interns.srv1335246.hstgr.cloud/webhook/redeem-key";
+
+      // If user navigates back here after activating, redirect them to sign in
+      window.addEventListener("pageshow", function (e) {
+        if (sessionStorage.getItem("leadx_logged_in") === "1") {
+          window.location.replace("access-page.html");
+        }
+      });
+      const REDIRECT_URL = "https://www.youtube.com";
+
+      function showAlert(type, text) {
+        const el = document.getElementById("alertBox");
+        el.className = "alert " + type + " show";
+        el.textContent = text;
+      }
+      function hideAlert() {
+        document.getElementById("alertBox").className = "alert";
+      }
+
+      async function handleRedeem() {
+        hideAlert();
+        const key = document
+          .getElementById("keyInput")
+          .value.trim()
+          .toUpperCase();
+        const email = document
+          .getElementById("emailInput")
+          .value.trim()
+          .toLowerCase();
+        const password = document.getElementById("passwordInput").value.trim();
+        const confirm = document.getElementById("confirmInput").value.trim();
+        if (!key || !email || !password || !confirm) {
+          showAlert("error", "Please fill in all fields.");
+          return;
+        }
+        if (password.length < 8) {
+          showAlert("error", "Your password must be at least 8 characters.");
+          return;
+        }
+        if (password !== confirm) {
+          showAlert("error", "Passwords do not match. Please try again.");
+          return;
+        }
+        const btn = document.getElementById("submitBtn");
+        btn.classList.add("loading");
+        try {
+          const res = await fetch(REDEEM_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ key, email, password }),
+          });
+          const data = await res.json();
+          if (data.status === "success") {
+            const trial = data.trial || {};
+            const trialEnd = trial.trial_end
+              ? new Date(trial.trial_end).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              : null;
+            document.getElementById("formSection").style.display = "none";
+            document.getElementById("successBody").textContent =
+              "Your trial is active" +
+              (trialEnd ? " until " + trialEnd : "") +
+              ". Redirecting you in a moment...";
+            const fields = [
+              { label: "Email", value: trial.email },
+              { label: "Trial ID", value: trial.trial_id, mono: true },
+              { label: "Status", value: trial.account_status, isStatus: true },
+              { label: "Expires", value: trialEnd },
+            ];
+            document.getElementById("trialGrid").innerHTML = fields
+              .filter((f) => f.value)
+              .map(
+                (f) => `
+            <div class="trial-item">
+              <div class="trial-label">${f.label}</div>
+              <div class="trial-value ${f.mono ? "mono" : ""}">${f.isStatus ? `<span class="status-pill">${f.value}</span>` : f.value}</div>
+            </div>`,
+              )
+              .join("");
+            document.getElementById("goToAppBtn").href = REDIRECT_URL;
+            sessionStorage.setItem("leadx_logged_in", "1");
+            sessionStorage.setItem("leadx_trial_end", trialEnd || "");
+            document.getElementById("successState").style.display = "block";
+            history.replaceState(
+              { loggedIn: true },
+              "",
+              window.location.pathname,
+            );
+            setTimeout(() => {
+              history.replaceState(null, "", window.location.pathname);
+              window.location.href = REDIRECT_URL;
+            }, 3000);
+          } else {
+            showAlert(
+              "error",
+              data.message ||
+                "Activation failed. Please check your key and try again.",
+            );
+          }
+        } catch (err) {
+          showAlert(
+            "error",
+            "Could not connect to the server. Please check your connection and try again.",
+          );
+        }
+        btn.classList.remove("loading");
+        btn.querySelector(".btn-text").textContent = "Activate Trial";
+      }
+
+      document
+        .getElementById("keyInput")
+        .addEventListener("input", function () {
+          let val = this.value.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+          if (val.startsWith("TRL")) val = val.slice(3);
+          let formatted = "TRL";
+          for (let i = 0; i < val.length && i < 12; i++) {
+            if (i % 4 === 0) formatted += "-";
+            formatted += val[i];
+          }
+          this.value = formatted;
+        });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleRedeem();
+      });
+
+      // If user arrives via forward button (bfcache restore), reset to form
+      window.addEventListener("pageshow", function (e) {
+        if (e.persisted) {
+          document.getElementById("successState").style.display = "none";
+          document.getElementById("formSection").style.display = "block";
+          document.getElementById("alertBox").className = "alert";
+        }
+      });
+
+      function goToApp(e) {
+        e.preventDefault();
+        const href = document.getElementById("goToAppBtn").href;
+        if (href && href !== "#" && href !== window.location.href) {
+          window.location.replace(href);
+        }
+      }
+    </script>
+  </body>
+</html>

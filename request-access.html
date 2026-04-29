@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request Access — LeadX</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      const PRODUCT_CONFIG = {
+        product_id: "T001",
+        product_name: "LeadX",
+        trial_label: "14-day free trial",
+        support_email: "agnlaudes@gmail.com",
+      };
+      const FPJS_PUBLIC_KEY = "H1IbdanAlUXYVmMl7dhP";
+      const N8N_WEBHOOK_URL =
+        "https://interns.srv1335246.hstgr.cloud/webhook/lock-mechanism";
+      const fpPromise = import(
+        "https://fpjscdn.net/v3/" + FPJS_PUBLIC_KEY
+      ).then((FP) => FP.load());
+    </script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f7faf8;
+        --surface: #ffffff;
+        --surface-2: #eff5f2;
+        --left-bg: #0d2818;
+        --border: #ddeae3;
+        --border-dark: #1e3d2a;
+        --text: #0d1f14;
+        --text-inv: #e8f5ee;
+        --muted: #5a7a66;
+        --muted-inv: #7aaa8a;
+        --blue: #1d6fa4;
+        --blue-light: #e8f3fb;
+        --blue-dim: rgba(29, 111, 164, 0.12);
+        --error: #c0392b;
+        --error-light: #fdf0ee;
+        --success-light: #e6f7ed;
+        --success: #1a7a45;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 420px 1fr;
+      }
+      .left {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 48px 44px;
+        background: var(--left-bg);
+        overflow: hidden;
+      }
+      .left::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(26, 92, 53, 0.55) 0%,
+          transparent 65%
+        );
+        top: -180px;
+        left: -180px;
+        pointer-events: none;
+      }
+      .left::after {
+        content: "";
+        position: absolute;
+        width: 360px;
+        height: 360px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(29, 111, 164, 0.18) 0%,
+          transparent 60%
+        );
+        bottom: -80px;
+        right: -80px;
+        pointer-events: none;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 1;
+      }
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        background: var(--blue);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        font-size: 16px;
+        font-weight: 900;
+        color: #fff;
+      }
+      .brand-name {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-inv);
+      }
+      .left-content {
+        position: relative;
+        z-index: 1;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-inv);
+        margin-bottom: 22px;
+      }
+      .eyebrow-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #6ec6f5;
+      }
+      h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(32px, 3vw, 44px);
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: var(--text-inv);
+        margin-bottom: 18px;
+      }
+      h1 em {
+        font-style: italic;
+        font-weight: 700;
+        color: #6ec6f5;
+      }
+      .left-desc {
+        font-size: 14px;
+        color: var(--muted-inv);
+        line-height: 1.75;
+        margin-bottom: 36px;
+      }
+      .steps {
+        display: flex;
+        flex-direction: column;
+      }
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border-dark);
+      }
+      .step-item:last-child {
+        border-bottom: none;
+      }
+      .step-num {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(110, 198, 245, 0.12);
+        border: 1px solid rgba(110, 198, 245, 0.28);
+        color: #6ec6f5;
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .step-text {
+        font-size: 13px;
+        color: var(--muted-inv);
+        line-height: 1.5;
+      }
+      .step-text strong {
+        color: var(--text-inv);
+        font-weight: 500;
+        display: block;
+        margin-bottom: 2px;
+      }
+      .left-footer {
+        font-size: 12px;
+        color: rgba(122, 170, 138, 0.45);
+        position: relative;
+        z-index: 1;
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 64px;
+        overflow-y: auto;
+        background: var(--bg);
+      }
+      .form-container {
+        width: 100%;
+        max-width: 440px;
+        animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .form-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--blue-light);
+        color: var(--blue);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .form-title {
+        font-family: "Fraunces", serif;
+        font-size: 30px;
+        font-weight: 900;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .form-sub {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+      .form-sub a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .form-sub a:hover {
+        text-decoration: underline;
+      }
+      .field {
+        margin-bottom: 18px;
+      }
+      .field label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 7px;
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        padding: 13px 16px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .field textarea {
+        resize: vertical;
+        min-height: 92px;
+        line-height: 1.55;
+      }
+      .field input:focus,
+      .field textarea:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px var(--blue-dim);
+      }
+      .field input::placeholder,
+      .field textarea::placeholder {
+        color: #b8c8be;
+      }
+      .optional-badge {
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+        background: var(--surface-2);
+        color: var(--muted);
+        padding: 2px 7px;
+        border-radius: 4px;
+      }
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 22px 0;
+      }
+      .btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .btn:hover:not(:disabled) {
+        background: #186091;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(29, 111, 164, 0.28);
+      }
+      .btn:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .btn.loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .spinner {
+        width: 15px;
+        height: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+      }
+      .btn.loading .spinner {
+        display: block;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .alert {
+        display: none;
+        padding: 13px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 18px;
+      }
+      .alert.error {
+        background: var(--error-light);
+        border: 1.5px solid rgba(192, 57, 43, 0.2);
+        color: #a93226;
+      }
+      .alert.show {
+        display: block;
+        animation: fadeUp 0.2s ease both;
+      }
+      .success-state {
+        display: none;
+        text-align: center;
+        padding: 24px 0;
+        animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .success-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--success-light);
+        border: 2px solid rgba(26, 122, 69, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin: 0 auto 20px;
+      }
+      .success-title {
+        font-family: "Fraunces", serif;
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: 10px;
+      }
+      .success-body {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.65;
+        max-width: 320px;
+        margin: 0 auto 28px;
+      }
+      .success-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+      .btn-ghost {
+        width: 100%;
+        padding: 13px;
+        background: transparent;
+        color: var(--muted);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-ghost:hover {
+        border-color: var(--muted);
+        color: var(--text);
+      }
+      .footer-note {
+        margin-top: 22px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .footer-note a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .footer-note a:hover {
+        text-decoration: underline;
+      }
+      @media (max-width: 860px) {
+        body {
+          grid-template-columns: 1fr;
+        }
+        .left {
+          display: none;
+        }
+        .right {
+          padding: 40px 24px;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left">
+      <div class="brand">
+        <div class="brand-mark">L</div>
+        <span class="brand-name">LeadX</span>
+      </div>
+      <div class="left-content">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Get started</div>
+        <h1>Start your<br /><em>free trial.</em></h1>
+        <p class="left-desc">
+          LeadX helps your team find, engage, and convert leads at scale —
+          intelligent outreach and real-time analytics, built in.
+        </p>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <strong>Submit your request</strong>Fill in the form and we'll
+              review it promptly.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <strong>Get your access key</strong>Approved requests receive a
+              key by email.
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <strong>Activate your trial</strong>Redeem your key to unlock 14
+              days free.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="left-footer">© 2026 LeadX. All rights reserved.</div>
+    </div>
+
+    <div class="right">
+      <div class="form-container">
+        <!-- Form -->
+        <div id="formSection">
+          <div class="form-kicker">✦ Trial Access</div>
+          <div class="form-title">Request access</div>
+          <p class="form-sub">
+            Already have a key? <a href="access-page.html">Sign in here</a>
+          </p>
+          <div class="alert" id="alertBox"></div>
+          <div class="field">
+            <label>Full Name</label>
+            <input
+              type="text"
+              id="full_name"
+              placeholder="Jane Smith"
+              autocomplete="name"
+            />
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="jane@company.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="field">
+            <label>Company <span class="optional-badge">optional</span></label>
+            <input
+              type="text"
+              id="company"
+              placeholder="Acme Inc. or Personal Project"
+              autocomplete="organization"
+            />
+          </div>
+          <div class="field">
+            <label
+              >Why are you interested?
+              <span class="optional-badge">optional</span></label
+            >
+            <textarea
+              id="reason"
+              placeholder="Tell us briefly about your use case..."
+            ></textarea>
+          </div>
+          <div class="divider"></div>
+          <button class="btn" id="submitBtn" onclick="handleSubmit()">
+            <div class="spinner"></div>
+            <span class="btn-text">Request Access</span>
+          </button>
+        </div>
+
+        <!-- Success State -->
+        <div class="success-state" id="successState">
+          <div class="success-icon" id="successIcon">✓</div>
+          <div class="success-title" id="successTitle">Request Received</div>
+          <p class="success-body" id="successBody">
+            We'll be in touch shortly.
+          </p>
+          <div class="success-nav" id="successNav"></div>
+        </div>
+
+        <p class="footer-note">
+          Your information is kept private. Need help?
+          <a href="mailto:agnlaudes@gmail.com">Contact support</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // If already logged in, don't show the request form — send to app
+      window.addEventListener("pageshow", function () {
+        if (sessionStorage.getItem("leadx_logged_in") === "1") {
+          const trialEnd = sessionStorage.getItem("leadx_trial_end");
+          document.getElementById("formSection").style.display = "none";
+          const state = document.getElementById("successState");
+          state.style.display = "block";
+          document.getElementById("successIcon").textContent = "✓";
+          document.getElementById("successTitle").textContent =
+            "Already signed in";
+          document.getElementById("successBody").textContent =
+            "You already have an active trial" +
+            (trialEnd ? " until " + trialEnd : "") +
+            ". No need to request access again.";
+          document.getElementById("successNav").innerHTML = `
+          <a class="btn" href="${REDIRECT_URL}">Go to app →</a>
+          <a class="btn-ghost" href="access-page.html">Back to sign in</a>`;
+        }
+      });
+
+      function showAlert(type, text) {
+        const el = document.getElementById("alertBox");
+        el.className = "alert " + type + " show";
+        el.textContent = text;
+      }
+      function hideAlert() {
+        document.getElementById("alertBox").className = "alert";
+      }
+
+      function showSuccess(type) {
+        document.getElementById("formSection").style.display = "none";
+        document.getElementById("successState").style.display = "block";
+        const nav = document.getElementById("successNav");
+        if (type === "approved") {
+          document.getElementById("successIcon").textContent = "✓";
+          document.getElementById("successTitle").textContent =
+            "You're approved!";
+          document.getElementById("successBody").textContent =
+            "Your access key is on its way. Check your inbox, then come back to activate your trial.";
+          nav.innerHTML = `
+          <a class="btn" href="redeem-test.html">Activate your key →</a>
+          <a class="btn-ghost" href="access-page.html">Sign in to an existing account</a>`;
+        } else {
+          document.getElementById("successIcon").textContent = "⏳";
+          document.getElementById("successTitle").textContent =
+            "Request under review";
+          document.getElementById("successBody").textContent =
+            "We'll review your request and get back to you within 24 hours. Once approved, use your key to activate your trial.";
+          nav.innerHTML = `
+          <a class="btn" href="redeem-test.html">Activate a key when ready →</a>
+          <a class="btn-ghost" href="access-page.html">Sign in to an existing account</a>`;
+        }
+      }
+
+      async function handleSubmit() {
+        hideAlert();
+        const fullName = document.getElementById("full_name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const company = document.getElementById("company").value.trim();
+        const reason = document.getElementById("reason").value.trim();
+        if (!fullName || !email) {
+          showAlert("error", "Please enter your full name and email address.");
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showAlert("error", "Please enter a valid email address.");
+          return;
+        }
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.classList.add("loading");
+        btn.querySelector(".btn-text").textContent = "Submitting...";
+        try {
+          let fingerprintId = null;
+          try {
+            const fp = await fpPromise;
+            const fpResult = await fp.get();
+            fingerprintId = fpResult.visitorId;
+          } catch (fpErr) {
+            console.warn(
+              "FingerprintJS failed, continuing without fingerprint:",
+              fpErr,
+            );
+          }
+
+          const response = await fetch(N8N_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              full_name: fullName,
+              email,
+              company: company || "Not specified",
+              reason,
+              fingerprint_id: fingerprintId,
+              product_id: PRODUCT_CONFIG.product_id,
+              product_name: PRODUCT_CONFIG.product_name,
+              timestamp: new Date().toISOString(),
+            }),
+          });
+
+          const raw = await response.text();
+          let result;
+          try {
+            result = JSON.parse(raw);
+          } catch {
+            console.error("n8n returned non-JSON:", response.status, raw);
+            showAlert(
+              "error",
+              "Server returned an unexpected response (HTTP " +
+                response.status +
+                "). Check your n8n Respond to Webhook node.",
+            );
+            btn.disabled = false;
+            btn.classList.remove("loading");
+            btn.querySelector(".btn-text").textContent = "Request Access";
+            return;
+          }
+
+          if (result.status === "approved") {
+            showSuccess("approved");
+          } else if (result.status === "pending") {
+            showSuccess("pending");
+          } else {
+            showAlert(
+              "error",
+              result.message ||
+                "Unable to process your request. Please try again.",
+            );
+            btn.disabled = false;
+            btn.classList.remove("loading");
+            btn.querySelector(".btn-text").textContent = "Request Access";
+          }
+        } catch (err) {
+          console.error("Fetch error:", err);
+          showAlert(
+            "error",
+            "Could not reach the server. Please check your connection and try again.",
+          );
+          btn.disabled = false;
+          btn.classList.remove("loading");
+          btn.querySelector(".btn-text").textContent = "Request Access";
+        }
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.target.tagName !== "TEXTAREA")
+          handleSubmit();
+      });
+    </script>
+  </body>
+</html>

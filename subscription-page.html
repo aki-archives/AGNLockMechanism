@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscribe to Premium — LeadX</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f7faf8;
+        --surface: #ffffff;
+        --left-bg: #0d2818;
+        --border: #ddeae3;
+        --border-dark: #1e3d2a;
+        --text: #0d1f14;
+        --text-inv: #e8f5ee;
+        --muted: #5a7a66;
+        --muted-inv: #7aaa8a;
+        --blue: #1d6fa4;
+        --blue-light: #e8f3fb;
+        --blue-dim: rgba(29, 111, 164, 0.12);
+        --error: #c0392b;
+        --error-dim: rgba(192, 57, 43, 0.1);
+        --success: #1a7a45;
+        --success-dim: rgba(26, 122, 69, 0.1);
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 420px 1fr;
+      }
+
+      /* ── Left Panel ── */
+      .left {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 48px 44px;
+        background: var(--left-bg);
+        overflow: hidden;
+      }
+      .left::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(26, 92, 53, 0.55) 0%,
+          transparent 65%
+        );
+        top: -180px;
+        left: -180px;
+        pointer-events: none;
+      }
+      .left::after {
+        content: "";
+        position: absolute;
+        width: 360px;
+        height: 360px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(29, 111, 164, 0.22) 0%,
+          transparent 60%
+        );
+        bottom: -80px;
+        right: -80px;
+        pointer-events: none;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 1;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        background: var(--blue);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        font-size: 16px;
+        font-weight: 900;
+        color: #fff;
+      }
+      .brand-name {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-inv);
+      }
+      .left-content {
+        position: relative;
+        z-index: 1;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-inv);
+        margin-bottom: 22px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 24px;
+        height: 1px;
+        background: #6ec6f5;
+      }
+      h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(30px, 2.8vw, 42px);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text-inv);
+        margin-bottom: 20px;
+      }
+      h1 em {
+        font-style: italic;
+        color: #6ec6f5;
+      }
+      .left-desc {
+        font-size: 14px;
+        color: var(--muted-inv);
+        line-height: 1.75;
+        max-width: 360px;
+        margin-bottom: 36px;
+      }
+
+      /* Pricing highlight on left */
+      .price-block {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1.5px solid rgba(110, 198, 245, 0.2);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 28px;
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+      }
+      .price-currency {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--muted-inv);
+      }
+      .price-amount {
+        font-family: "Fraunces", serif;
+        font-size: 44px;
+        font-weight: 900;
+        color: #6ec6f5;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .price-period {
+        font-size: 14px;
+        color: var(--muted-inv);
+      }
+
+      .features {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+      .feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--muted-inv);
+      }
+      .feature-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #6ec6f5;
+        flex-shrink: 0;
+      }
+      .left-footer {
+        font-size: 12px;
+        color: rgba(122, 170, 138, 0.45);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── Right Panel ── */
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 64px;
+        overflow-y: auto;
+        background: var(--bg);
+        position: relative;
+      }
+      .right::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at 80% 20%,
+            rgba(29, 111, 164, 0.04) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 20% 80%,
+            rgba(26, 92, 53, 0.02) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+      .form-container {
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Steps */
+      .step {
+        display: none;
+        animation: stepIn 0.35s ease both;
+      }
+      .step.active {
+        display: block;
+      }
+      @keyframes stepIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .step-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .step-title {
+        font-family: "Fraunces", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 6px;
+        line-height: 1.2;
+      }
+      .step-sub {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+      .step-sub a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .step-sub a:hover {
+        text-decoration: underline;
+      }
+
+      /* Progress steps indicator */
+      .progress-bar {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 32px;
+      }
+      .progress-step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .progress-step.active {
+        color: var(--blue);
+      }
+      .progress-step.done {
+        color: var(--success);
+      }
+      .progress-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: var(--surface);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        transition: all 0.3s;
+      }
+      .progress-step.active .progress-dot {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+      .progress-step.done .progress-dot {
+        border-color: var(--success);
+        background: var(--success);
+        color: #fff;
+      }
+      .progress-line {
+        flex: 1;
+        height: 1.5px;
+        background: var(--border);
+        margin: 0 8px;
+      }
+      .progress-line.done {
+        background: var(--success);
+      }
+
+      /* Fields */
+      .field {
+        margin-bottom: 16px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .field input {
+        width: 100%;
+        padding: 13px 16px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: all 0.2s;
+      }
+      .field input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px var(--blue-dim);
+      }
+      .field input::placeholder {
+        color: #b8c8be;
+      }
+      .field-hint {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      /* Order summary box */
+      .order-summary {
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .order-summary-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .order-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .order-row:last-child {
+        border-bottom: none;
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .order-row .label {
+        color: var(--muted);
+      }
+      .order-row .value {
+        color: var(--text);
+      }
+      .order-row.total .label {
+        color: var(--text);
+      }
+      .order-row.total .value {
+        color: var(--blue);
+        font-family: "Fraunces", serif;
+        font-size: 18px;
+      }
+
+      /* Buttons */
+      .btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #1d6fa4 0%, #0e4a73 100%);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 8px;
+        text-decoration: none;
+        box-shadow: 0 2px 12px rgba(29, 111, 164, 0.3);
+      }
+      .btn:hover:not(.loading) {
+        background: linear-gradient(135deg, #2280bc 0%, #1058a0 100%);
+        box-shadow: 0 6px 24px rgba(29, 111, 164, 0.45);
+        transform: translateY(-1px);
+      }
+      .btn:active:not(.loading) {
+        transform: translateY(0);
+      }
+      .btn.loading {
+        opacity: 0.65;
+        pointer-events: none;
+      }
+      .btn-ghost {
+        width: 100%;
+        padding: 13px;
+        background: transparent;
+        color: var(--muted);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-ghost:hover {
+        border-color: var(--muted);
+        color: var(--text);
+      }
+      .spinner {
+        width: 15px;
+        height: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+      }
+      .btn.loading .spinner {
+        display: block;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Alerts */
+      .alert {
+        display: none;
+        padding: 13px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 16px;
+      }
+      .alert.error {
+        background: var(--error-dim);
+        border: 1.5px solid rgba(192, 57, 43, 0.2);
+        color: #a93226;
+      }
+      .alert.success {
+        background: var(--success-dim);
+        border: 1.5px solid rgba(26, 122, 69, 0.2);
+        color: #1a5c35;
+      }
+      .alert.show {
+        display: block;
+        animation: stepIn 0.2s ease both;
+      }
+      .alert-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      /* XendIt redirect box */
+      .xendit-box {
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .xendit-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #f5f8ff;
+        border: 1.5px solid #d0dff5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .xendit-info {
+        flex: 1;
+      }
+      .xendit-info strong {
+        font-size: 14px;
+        color: var(--text);
+        display: block;
+        margin-bottom: 3px;
+      }
+      .xendit-info span {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        display: block;
+      }
+
+      /* Success */
+      .success-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--success-dim);
+        border: 1px solid rgba(26, 122, 69, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      /* Security note */
+      .security-note {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 14px;
+        padding: 10px 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+
+      @media (max-width: 860px) {
+        body {
+          grid-template-columns: 1fr;
+        }
+        .left {
+          display: none;
+        }
+        .right {
+          padding: 40px 24px;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Left Panel -->
+    <div class="left">
+      <a class="brand" href="access-page.html">
+        <div class="brand-mark">L</div>
+        <span class="brand-name">LeadX</span>
+      </a>
+      <div class="left-content">
+        <div class="eyebrow">Premium Plan</div>
+        <h1>Unlock<br /><em>instant access.</em></h1>
+        <p class="left-desc">
+          Skip the queue. Get renewable access codes, longer windows, and full
+          control over who gets in.
+        </p>
+
+        <div class="price-block">
+          <span class="price-currency">$</span>
+          <span class="price-amount"> 20 </span>
+          <span class="price-period">/ month</span>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <div class="feature-dot"></div>
+            Instant access — no approval wait
+          </div>
+          <div class="feature">
+            <div class="feature-dot"></div>
+            Renewable &amp; extendable codes
+          </div>
+          <div class="feature">
+            <div class="feature-dot"></div>
+            Multiple active codes at once
+          </div>
+          <div class="feature">
+            <div class="feature-dot"></div>
+            30, 60, or 90-day access windows
+          </div>
+          <div class="feature">
+            <div class="feature-dot"></div>
+            Cancel anytime
+          </div>
+        </div>
+      </div>
+      <div class="left-footer">© 2026 LeadX. All rights reserved.</div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right">
+      <div class="form-container">
+        <!-- Step 1: Enter email -->
+        <div class="step active" id="step-email">
+          <div class="progress-bar">
+            <div class="progress-step active" id="prog-1">
+              <div class="progress-dot">1</div>
+              <span>Your details</span>
+            </div>
+            <div class="progress-line" id="prog-line-1"></div>
+            <div class="progress-step" id="prog-2">
+              <div class="progress-dot">2</div>
+              <span>Payment</span>
+            </div>
+            <div class="progress-line" id="prog-line-2"></div>
+            <div class="progress-step" id="prog-3">
+              <div class="progress-dot">3</div>
+              <span>Confirmed</span>
+            </div>
+          </div>
+
+          <div class="step-label">Step 1 of 2</div>
+          <div class="step-title">Subscribe to Premium</div>
+          <p class="step-sub">
+            Enter your details and we'll send you to our secure payment page.
+          </p>
+
+          <div class="alert" id="email-alert">
+            <div class="alert-title" id="email-alert-title"></div>
+            <div id="email-alert-body"></div>
+          </div>
+
+          <div class="field">
+            <label>Full Name</label>
+            <input
+              type="text"
+              id="sub-name"
+              placeholder="James dela Cruz"
+              autocomplete="name"
+            />
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="sub-email"
+              placeholder="you@company.com"
+              autocomplete="email"
+            />
+            <div class="field-hint">
+              Your access code and receipt will be sent here.
+            </div>
+          </div>
+
+          <button class="btn" id="continue-btn" onclick="handleContinue()">
+            <div class="spinner"></div>
+            <span class="btn-text">Continue to Payment →</span>
+          </button>
+
+          <a class="btn-ghost" href="premium-landing.html">← Back to plans</a>
+
+          <div class="security-note">
+            🔒 Payments are processed securely via XendIt. LeadX does not store
+            card details.
+          </div>
+        </div>
+
+        <!-- Step 2: Review & Pay -->
+        <div class="step" id="step-pay">
+          <div class="progress-bar">
+            <div class="progress-step done" id="prog-1b">
+              <div class="progress-dot">✓</div>
+              <span>Your details</span>
+            </div>
+            <div class="progress-line done"></div>
+            <div class="progress-step active" id="prog-2b">
+              <div class="progress-dot">2</div>
+              <span>Payment</span>
+            </div>
+            <div class="progress-line" id="prog-line-2b"></div>
+            <div class="progress-step" id="prog-3b">
+              <div class="progress-dot">3</div>
+              <span>Confirmed</span>
+            </div>
+          </div>
+
+          <div class="step-label">Step 2 of 2</div>
+          <div class="step-title">Review & Pay</div>
+          <p class="step-sub">
+            Confirm your order before heading to the payment page.
+          </p>
+
+          <div class="order-summary">
+            <div class="order-summary-title">Order Summary</div>
+            <div class="order-row">
+              <span class="label">Plan</span>
+              <span class="value">LeadX Premium</span>
+            </div>
+            <div class="order-row">
+              <span class="label">Billing</span>
+              <span class="value">Monthly</span>
+            </div>
+            <div class="order-row">
+              <span class="label">Subscribing as</span>
+              <span
+                class="value"
+                id="summary-email"
+                style="
+                  font-family: &quot;DM Mono&quot;, monospace;
+                  font-size: 13px;
+                "
+                >—</span
+              >
+            </div>
+            <div class="order-row total">
+              <span class="label">Total due today</span>
+              <span class="value">$20.00</span>
+            </div>
+          </div>
+
+          <div class="xendit-box">
+            <div class="xendit-icon">💳</div>
+            <div class="xendit-info">
+              <strong>You'll be redirected to XendIt</strong>
+              <span
+                >Complete your payment on XendIt's secure page. Once confirmed,
+                your premium access code will be emailed to you
+                automatically.</span
+              >
+            </div>
+          </div>
+
+          <button class="btn" id="pay-btn" onclick="handlePay()">
+            <div class="spinner"></div>
+            <span class="btn-text">Pay $20 via XendIt →</span>
+          </button>
+
+          <button class="btn-ghost" onclick="showStep('step-email')">
+            ← Back
+          </button>
+
+          <div class="security-note">
+            🔒 You'll be redirected to XendIt's secure checkout. After payment,
+            you'll be brought back automatically.
+          </div>
+        </div>
+
+        <!-- Step 3: Success (landing after XendIt callback) -->
+        <div class="step" id="step-success">
+          <div class="success-icon">✓</div>
+          <div class="step-label">Payment confirmed</div>
+          <div class="step-title">You're a Premium member!</div>
+          <p class="step-sub" id="success-message">
+            Your payment was received. Check your inbox — your premium access
+            code is on its way.
+          </p>
+
+          <a class="btn" href="access-page.html">Sign in to your account →</a>
+          <a class="btn-ghost" href="pricing.html">← Back to plans</a>
+        </div>
+
+        <!-- Step: Already subscribed -->
+        <div class="step" id="step-already">
+          <div
+            class="success-icon"
+            style="
+              background: var(--blue-light);
+              border-color: rgba(29, 111, 164, 0.2);
+              font-size: 22px;
+            "
+          >
+            👑
+          </div>
+          <div class="step-label">Already active</div>
+          <div class="step-title">You're already on Premium!</div>
+          <p class="step-sub" id="already-message">
+            This email already has an active premium subscription.
+          </p>
+          <a class="btn" href="access-page.html">Go to sign in →</a>
+          <button class="btn-ghost" onclick="showStep('step-email')">
+            ← Use a different email
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ── CONFIG — update these when you set up the n8n premium webhook ──
+      const N8N_BASE = "https://interns.srv1335246.hstgr.cloud/webhook";
+      const CHECK_URL = N8N_BASE + "/check-premium"; // POST {email} → {is_premium, subscription_end}
+      const REGISTER_URL = N8N_BASE + "/register-premium"; // POST {email, full_name} → {xendit_checkout_url}
+
+      // XendIt success redirect comes back here with ?payment=success&email=...
+      // XendIt cancel redirect comes back here with ?payment=cancelled
+
+      // ─────────────────────────────────────────
+      let currentEmail = "";
+      let currentName = "";
+
+      function showStep(id) {
+        document
+          .querySelectorAll(".step")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+      }
+
+      function showAlert(id, type, title, body) {
+        const el = document.getElementById(id);
+        el.className = "alert " + type + " show";
+        el.style.display = "block";
+        document.getElementById(id + "-title").textContent = title;
+        document.getElementById(id + "-body").textContent = body;
+      }
+
+      function clearAlert(id) {
+        const el = document.getElementById(id);
+        el.className = "alert";
+        el.style.display = "none";
+      }
+
+      function setLoading(btnId, loading, text, loadingText) {
+        const btn = document.getElementById(btnId);
+        btn.classList.toggle("loading", loading);
+        btn.querySelector(".btn-text").textContent = loading
+          ? loadingText
+          : text;
+      }
+
+      // ── Step 1: validate email, check if already premium ──
+      async function handleContinue() {
+        const name = document.getElementById("sub-name").value.trim();
+        const email = document
+          .getElementById("sub-email")
+          .value.trim()
+          .toLowerCase();
+        clearAlert("email-alert");
+
+        if (!name) {
+          showAlert(
+            "email-alert",
+            "error",
+            "Name required",
+            "Please enter your full name.",
+          );
+          return;
+        }
+        if (!email || !email.includes("@")) {
+          showAlert(
+            "email-alert",
+            "error",
+            "Valid email required",
+            "Please enter a valid email address.",
+          );
+          return;
+        }
+
+        setLoading(
+          "continue-btn",
+          true,
+          "Continue to Payment →",
+          "Checking account...",
+        );
+
+        try {
+          const res = await fetch(CHECK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+          const data = await res.json();
+
+          if (data.is_premium) {
+            const endDate = data.subscription_end
+              ? new Date(data.subscription_end).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              : null;
+            document.getElementById("already-message").textContent = endDate
+              ? `This email already has an active premium subscription until ${endDate}.`
+              : "This email already has an active premium subscription.";
+            showStep("step-already");
+            return;
+          }
+
+          // Not yet premium — proceed to review
+          currentEmail = email;
+          currentName = name;
+          document.getElementById("summary-email").textContent = email;
+          showStep("step-pay");
+        } catch (err) {
+          // If check endpoint not set up yet, allow through with a warning
+          console.warn("CHECK_URL not reachable, proceeding anyway:", err);
+          currentEmail = email;
+          currentName = name;
+          document.getElementById("summary-email").textContent = email;
+          showStep("step-pay");
+        }
+
+        setLoading(
+          "continue-btn",
+          false,
+          "Continue to Payment →",
+          "Checking account...",
+        );
+      }
+
+      // ── Step 2: call n8n to register pending sub + get XendIt checkout URL ──
+      async function handlePay() {
+        setLoading(
+          "pay-btn",
+          true,
+          "Pay $20 via XendIt →",
+          "Preparing payment...",
+        );
+
+        try {
+          const res = await fetch(REGISTER_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: currentEmail,
+              full_name: currentName,
+              plan: "premium_monthly",
+              amount: 20,
+              currency: "USD",
+              // XendIt will redirect back to these URLs after payment
+              success_url:
+                window.location.origin +
+                window.location.pathname +
+                "?payment=success&email=" +
+                encodeURIComponent(currentEmail),
+              cancel_url:
+                window.location.origin +
+                window.location.pathname +
+                "?payment=cancelled",
+            }),
+          });
+          const data = await res.json();
+
+          if (data.checkout_url) {
+            // Redirect to XendIt
+            window.location.href = data.checkout_url;
+          } else {
+            throw new Error(data.message || "No checkout URL returned");
+          }
+        } catch (err) {
+          // Fallback: if REGISTER_URL isn't set up yet, show a placeholder alert
+          console.error("REGISTER_URL error:", err);
+          // ── TEMPORARY: remove this block once n8n webhook is live ──
+          alert(
+            '⚠️ The payment webhook is not configured yet.\n\nOnce your n8n "register-premium" webhook is live, users will be redirected to XendIt here.\n\nEndpoint to configure: ' +
+              REGISTER_URL,
+          );
+        }
+
+        setLoading(
+          "pay-btn",
+          false,
+          "Pay $20 via XendIt →",
+          "Preparing payment...",
+        );
+      }
+
+      // ── Handle XendIt redirect back ──
+      (function handleReturnFromXendIt() {
+        const params = new URLSearchParams(window.location.search);
+        const payment = params.get("payment");
+        const email = params.get("email");
+
+        if (payment === "success" && email) {
+          const decoded = decodeURIComponent(email);
+          document.getElementById("success-message").textContent =
+            `Payment received for ${decoded}. Your premium access code is being generated and will arrive in your inbox shortly.`;
+          showStep("step-success");
+          // Clean URL
+          window.history.replaceState({}, "", window.location.pathname);
+        } else if (payment === "cancelled") {
+          showStep("step-email");
+          showAlert(
+            "email-alert",
+            "error",
+            "Payment cancelled",
+            "Your payment was not completed. You can try again whenever you're ready.",
+          );
+          window.history.replaceState({}, "", window.location.pathname);
+        }
+      })();
+
+      // Enter key support
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+        if (document.getElementById("step-email").classList.contains("active"))
+          handleContinue();
+        if (document.getElementById("step-pay").classList.contains("active"))
+          handlePay();
+      });
+    </script>
+  </body>
+</html>

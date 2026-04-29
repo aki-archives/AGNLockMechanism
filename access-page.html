@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In — LeadX</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f7faf8;
+        --surface: #ffffff;
+        --left-bg: #0d2818;
+        --border: #ddeae3;
+        --border-dark: #1e3d2a;
+        --text: #0d1f14;
+        --text-inv: #e8f5ee;
+        --muted: #5a7a66;
+        --muted-inv: #7aaa8a;
+        --blue: #1d6fa4;
+        --blue-light: #e8f3fb;
+        --blue-dim: rgba(29, 111, 164, 0.12);
+        --error: #c0392b;
+        --error-dim: rgba(192, 57, 43, 0.1);
+        --success: #1a7a45;
+        --success-dim: rgba(26, 122, 69, 0.1);
+        --warning-dim: rgba(176, 125, 26, 0.1);
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 420px 1fr;
+      }
+
+      /* ── Left Panel ── */
+      .left {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 48px 44px;
+        background: var(--left-bg);
+        overflow: hidden;
+      }
+      .left::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(26, 92, 53, 0.55) 0%,
+          transparent 65%
+        );
+        top: -180px;
+        left: -180px;
+        pointer-events: none;
+      }
+      .left::after {
+        content: "";
+        position: absolute;
+        width: 360px;
+        height: 360px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(29, 111, 164, 0.18) 0%,
+          transparent 60%
+        );
+        bottom: -80px;
+        right: -80px;
+        pointer-events: none;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 1;
+      }
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        background: var(--blue);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        font-size: 16px;
+        font-weight: 900;
+        color: #fff;
+      }
+      .brand-name {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-inv);
+      }
+      .left-content {
+        position: relative;
+        z-index: 1;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-inv);
+        margin-bottom: 22px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 24px;
+        height: 1px;
+        background: #6ec6f5;
+      }
+      h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(34px, 3vw, 46px);
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: var(--text-inv);
+        margin-bottom: 20px;
+      }
+      h1 em {
+        font-style: italic;
+        color: #6ec6f5;
+      }
+      .left-desc {
+        font-size: 14px;
+        color: var(--muted-inv);
+        line-height: 1.75;
+        max-width: 360px;
+        margin-bottom: 40px;
+      }
+      .features {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--muted-inv);
+      }
+      .feature-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #6ec6f5;
+        flex-shrink: 0;
+      }
+      .left-footer {
+        font-size: 12px;
+        color: rgba(122, 170, 138, 0.45);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── Right Panel ── */
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 64px;
+        overflow-y: auto;
+        background: var(--bg);
+        position: relative;
+      }
+      .right::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at 80% 20%,
+            rgba(29, 111, 164, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 20% 80%,
+            rgba(26, 92, 53, 0.02) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+      .form-container {
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Step system */
+      .step {
+        display: none;
+        animation: stepIn 0.35s ease both;
+      }
+      .step.active {
+        display: block;
+      }
+      @keyframes stepIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .step-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .step-title {
+        font-family: "Fraunces", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 6px;
+        line-height: 1.2;
+      }
+      .step-sub {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+      .step-sub a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .step-sub a:hover {
+        text-decoration: underline;
+      }
+
+      /* Fields */
+      .field {
+        margin-bottom: 16px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .field input {
+        width: 100%;
+        padding: 13px 16px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: all 0.2s;
+      }
+      .field input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px var(--blue-dim);
+      }
+      .field input::placeholder {
+        color: #b8c8be;
+      }
+
+      /* Buttons */
+      .btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 8px;
+        text-decoration: none;
+      }
+      .btn:hover:not(.loading) {
+        background: #186091;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(29, 111, 164, 0.28);
+      }
+      .btn:active:not(.loading) {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+      .btn.loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .btn-ghost {
+        width: 100%;
+        padding: 13px;
+        background: transparent;
+        color: var(--muted);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-ghost:hover {
+        border-color: var(--muted);
+        color: var(--text);
+      }
+      .spinner {
+        width: 15px;
+        height: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+      }
+      .btn.loading .spinner {
+        display: block;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Alerts */
+      .alert {
+        display: none;
+        padding: 13px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 16px;
+      }
+      .alert.error {
+        background: var(--error-dim);
+        border: 1.5px solid rgba(192, 57, 43, 0.2);
+        color: #a93226;
+      }
+      .alert.warning {
+        background: var(--warning-dim);
+        border: 1.5px solid rgba(176, 125, 26, 0.2);
+        color: #8a5c10;
+      }
+      .alert.success {
+        background: var(--success-dim);
+        border: 1.5px solid rgba(26, 122, 69, 0.2);
+        color: #1a5c35;
+      }
+      .alert.show {
+        display: block;
+        animation: stepIn 0.2s ease both;
+      }
+      .alert-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .alert-link {
+        display: inline-block;
+        margin-top: 8px;
+        color: var(--blue);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .alert-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Divider */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* Premium CTA button */
+      .btn-premium {
+        width: 100%;
+        padding: 13px;
+        background: linear-gradient(135deg, #1d6fa4 0%, #0e4a73 100%);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 2px 12px rgba(29, 111, 164, 0.35);
+      }
+      .btn-premium:hover {
+        background: linear-gradient(135deg, #2280bc 0%, #1058a0 100%);
+        box-shadow: 0 6px 24px rgba(29, 111, 164, 0.5);
+        transform: translateY(-1px);
+      }
+      .btn-premium:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(29, 111, 164, 0.3);
+      }
+      .btn-premium .crown {
+        font-size: 15px;
+      }
+
+      /* Success step */
+      .success-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--success-dim);
+        border: 1px solid rgba(26, 122, 69, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      .success-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      @media (max-width: 860px) {
+        body {
+          grid-template-columns: 1fr;
+        }
+        .left {
+          display: none;
+        }
+        .right {
+          padding: 40px 24px;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Left Panel -->
+    <div class="left">
+      <div class="brand">
+        <div class="brand-mark">L</div>
+        <span class="brand-name">LeadX</span>
+      </div>
+      <div class="left-content">
+        <div class="eyebrow">Start your trial</div>
+        <h1>Reach more.<br /><em>Close faster.</em></h1>
+        <p class="left-desc">
+          LeadX gives your team the tools to find, engage, and convert leads at
+          scale — powered by intelligent outreach and real-time analytics.
+        </p>
+        <div class="features">
+          <div class="feature">
+            <div class="feature-dot"></div>
+            Intelligent lead scoring and prioritization
+          </div>
+          <div class="feature">
+            <div class="feature-dot"></div>
+            Multi-channel outreach automation
+          </div>
+          <div class="feature">
+            <div class="feature-dot"></div>
+            Real-time pipeline analytics
+          </div>
+          <div class="feature">
+            <div class="feature-dot"></div>
+            14-day trial, no credit card required
+          </div>
+        </div>
+      </div>
+      <div class="left-footer">© 2026 LeadX. All rights reserved.</div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right">
+      <div class="form-container">
+        <!-- Step 1: Sign In -->
+        <div class="step active" id="step-login">
+          <div class="step-label">Welcome back</div>
+          <div class="step-title">Sign in to your trial</div>
+          <p class="step-sub">
+            New here? <a href="request-access.html">Request access</a> to get
+            started.
+          </p>
+
+          <div class="alert" id="login-alert">
+            <div class="alert-title" id="login-alert-title"></div>
+            <div id="login-alert-body"></div>
+          </div>
+
+          <div class="field">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="login-email"
+              placeholder="you@company.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input
+              type="password"
+              id="login-password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+            />
+          </div>
+
+          <button class="btn" id="login-btn" onclick="handleLogin()">
+            <div class="spinner"></div>
+            <span class="btn-text">Sign In</span>
+          </button>
+
+          <div class="divider">or</div>
+
+          <button class="btn-ghost" onclick="showStep('step-redeem')">
+            Redeem an access key instead
+          </button>
+
+          <a class="btn-premium" href="premium-landing.html">
+            <span class="crown">👑</span> Subscribe to Premium
+          </a>
+        </div>
+
+        <!-- Step 2: Redeem Key -->
+        <div class="step" id="step-redeem">
+          <div class="step-label">First time here?</div>
+          <div class="step-title">Activate your key</div>
+          <p class="step-sub">
+            Enter the access key from your approval email to set up your
+            account.
+          </p>
+
+          <div class="alert" id="redeem-alert">
+            <div class="alert-title" id="redeem-alert-title"></div>
+            <div id="redeem-alert-body"></div>
+          </div>
+
+          <div class="field">
+            <label>Access Key</label>
+            <input
+              type="text"
+              id="redeem-key"
+              placeholder="TRL-XXXX-XXXX-XXXX"
+              autocomplete="off"
+              spellcheck="false"
+              style="
+                font-family: &quot;DM Mono&quot;, monospace;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+              "
+            />
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="redeem-email"
+              placeholder="you@company.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="field">
+            <label>Create Password</label>
+            <input
+              type="password"
+              id="redeem-password"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+            />
+          </div>
+          <div class="field">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              id="redeem-confirm"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+            />
+          </div>
+
+          <button class="btn" id="redeem-btn" onclick="handleRedeem()">
+            <div class="spinner"></div>
+            <span class="btn-text">Activate Trial</span>
+          </button>
+          <button class="btn-ghost" onclick="showStep('step-login')">
+            ← Back to sign in
+          </button>
+        </div>
+
+        <!-- Step 3: Success -->
+        <div class="step" id="step-success">
+          <div class="success-icon">✓</div>
+          <div class="step-label">You're in</div>
+          <div class="step-title">Trial activated!</div>
+          <p class="step-sub" id="success-message">
+            Your trial is now active. Redirecting you to the app...
+          </p>
+          <div class="success-actions">
+            <a class="btn" id="goToAppBtn" href="#" onclick="goToApp(event)"
+              >Go to app now →</a
+            >
+            <button class="btn-ghost" onclick="showStep('step-login')">
+              ← Back to sign in
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const CHECK_ACCESS_URL =
+        "https://interns.srv1335246.hstgr.cloud/webhook/check-access";
+
+      // ── Session & history management ──
+      // If user navigates back here after logging in, show "already signed in"
+      window.addEventListener("pageshow", function (e) {
+        if (sessionStorage.getItem("leadx_logged_in") === "1") {
+          const trialEnd = sessionStorage.getItem("leadx_trial_end");
+          const msg =
+            "You are already signed in" +
+            (trialEnd ? " (trial active until " + trialEnd + ")" : "") +
+            ".";
+          document.getElementById("success-message").textContent = msg;
+          document.getElementById("goToAppBtn").href = REDIRECT_URL;
+          showStep("step-success");
+        }
+      });
+
+      // Prevent forward navigation back to the redirect URL
+      window.addEventListener("popstate", function () {
+        // If we're back on this page but session says logged in, stay here
+        if (sessionStorage.getItem("leadx_logged_in") === "1") {
+          showStep("step-login");
+          sessionStorage.removeItem("leadx_logged_in");
+          sessionStorage.removeItem("leadx_trial_end");
+        }
+      });
+      const REDEEM_URL =
+        "https://interns.srv1335246.hstgr.cloud/webhook/redeem-key";
+      const REDIRECT_URL = "https://www.youtube.com";
+      const REQUEST_ACCESS_URL = "request-access.html";
+      const REDEEM_PAGE_URL = "redeem-test.html";
+
+      function showStep(id) {
+        document
+          .querySelectorAll(".step")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        clearAlerts();
+      }
+
+      function clearAlerts() {
+        document.querySelectorAll(".alert").forEach((a) => {
+          a.className = "alert";
+          a.style.display = "none";
+        });
+      }
+
+      function showAlert(id, type, title, body, linkText, linkHref) {
+        const el = document.getElementById(id);
+        el.className = "alert " + type + " show";
+        el.style.display = "block";
+        document.getElementById(id + "-title").textContent = title;
+        let html = body;
+        if (linkText && linkHref)
+          html += `<br><a class="alert-link" href="${linkHref}">${linkText} →</a>`;
+        document.getElementById(id + "-body").innerHTML = html;
+      }
+
+      function setLoading(btnId, loading) {
+        const btn = document.getElementById(btnId);
+        btn.classList.toggle("loading", loading);
+        btn.querySelector(".btn-text").textContent = loading
+          ? btnId === "login-btn"
+            ? "Signing in..."
+            : "Activating..."
+          : btnId === "login-btn"
+            ? "Sign In"
+            : "Activate Trial";
+      }
+
+      async function handleLogin() {
+        const email = document
+          .getElementById("login-email")
+          .value.trim()
+          .toLowerCase();
+        const password = document.getElementById("login-password").value.trim();
+        clearAlerts();
+        if (!email || !password) {
+          showAlert(
+            "login-alert",
+            "error",
+            "Missing fields",
+            "Please enter your email and password.",
+          );
+          return;
+        }
+        setLoading("login-btn", true);
+        try {
+          const res = await fetch(CHECK_ACCESS_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json();
+          if (data.access === true) {
+            const trialEnd = data.trial_end
+              ? new Date(data.trial_end).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              : null;
+            document.getElementById("success-message").textContent =
+              `Welcome back! Your trial is active${trialEnd ? " until " + trialEnd : ""}. Redirecting you now...`;
+            document.getElementById("goToAppBtn").href = REDIRECT_URL;
+            showStep("step-success");
+            setTimeout(() => {
+              // replaceState removes the app from history so back button returns here, not to YouTube
+              history.replaceState(null, "", REDIRECT_URL);
+              window.location.replace(REDIRECT_URL);
+            }, 2000);
+          } else {
+            switch (data.scenario) {
+              case "wrong_password":
+                showAlert(
+                  "login-alert",
+                  "error",
+                  "Incorrect password",
+                  "The password you entered is incorrect. Please try again.",
+                );
+                break;
+              case "trial_expired":
+                showAlert(
+                  "login-alert",
+                  "error",
+                  "Trial expired",
+                  "Your trial period has ended. Please contact support to renew your access.",
+                );
+                break;
+              case "approved_not_redeemed":
+                showAlert(
+                  "login-alert",
+                  "warning",
+                  "Key not yet redeemed",
+                  "Your request was approved but you haven't activated your key yet. Check your email for the access key.",
+                  "Activate your key here",
+                  REDEEM_PAGE_URL,
+                );
+                break;
+              case "not_found":
+                showAlert(
+                  "login-alert",
+                  "error",
+                  "No account found",
+                  "We couldn't find an account with this email address.",
+                  "Request access",
+                  REQUEST_ACCESS_URL,
+                );
+                setTimeout(() => {
+                  document.getElementById("login-alert").innerHTML +=
+                    `<br><a class="alert-link" href="${REDEEM_PAGE_URL}">Already have a key? Activate it here →</a>`;
+                }, 50);
+                break;
+              default:
+                showAlert(
+                  "login-alert",
+                  "error",
+                  "Something went wrong",
+                  data.message || "Please try again.",
+                );
+            }
+          }
+        } catch (err) {
+          showAlert(
+            "login-alert",
+            "error",
+            "Connection error",
+            "Could not reach the server. Please check your connection and try again.",
+          );
+        }
+        setLoading("login-btn", false);
+      }
+
+      async function handleRedeem() {
+        const key = document
+          .getElementById("redeem-key")
+          .value.trim()
+          .toUpperCase();
+        const email = document
+          .getElementById("redeem-email")
+          .value.trim()
+          .toLowerCase();
+        const password = document
+          .getElementById("redeem-password")
+          .value.trim();
+        const confirm = document.getElementById("redeem-confirm").value.trim();
+        clearAlerts();
+        if (!key || !email || !password || !confirm) {
+          showAlert(
+            "redeem-alert",
+            "error",
+            "Missing fields",
+            "Please fill in all fields.",
+          );
+          return;
+        }
+        if (password.length < 8) {
+          showAlert(
+            "redeem-alert",
+            "error",
+            "Password too short",
+            "Your password must be at least 8 characters.",
+          );
+          return;
+        }
+        if (password !== confirm) {
+          showAlert(
+            "redeem-alert",
+            "error",
+            "Passwords do not match",
+            "Please make sure both password fields match.",
+          );
+          return;
+        }
+        setLoading("redeem-btn", true);
+        try {
+          const res = await fetch(REDEEM_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ key, email, password }),
+          });
+          const data = await res.json();
+          if (data.status === "success") {
+            const trialEnd = data.trial?.trial_end
+              ? new Date(data.trial.trial_end).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              : null;
+            document.getElementById("success-message").textContent =
+              `Your trial is now active${trialEnd ? " until " + trialEnd : ""}. Redirecting you to the app...`;
+            document.getElementById("goToAppBtn").href = REDIRECT_URL;
+            showStep("step-success");
+            setTimeout(() => {
+              history.replaceState(null, "", REDIRECT_URL);
+              window.location.replace(REDIRECT_URL);
+            }, 2500);
+          } else {
+            showAlert(
+              "redeem-alert",
+              "error",
+              "Activation failed",
+              data.message || "Please check your key and try again.",
+            );
+          }
+        } catch (err) {
+          showAlert(
+            "redeem-alert",
+            "error",
+            "Connection error",
+            "Could not reach the server. Please try again.",
+          );
+        }
+        setLoading("redeem-btn", false);
+      }
+
+      document
+        .getElementById("redeem-key")
+        .addEventListener("input", function () {
+          let val = this.value.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+          if (val.startsWith("TRL")) val = val.slice(3);
+          let formatted = "TRL";
+          for (let i = 0; i < val.length && i < 12; i++) {
+            if (i % 4 === 0) formatted += "-";
+            formatted += val[i];
+          }
+          this.value = formatted;
+        });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+        if (document.getElementById("step-login").classList.contains("active"))
+          handleLogin();
+        if (document.getElementById("step-redeem").classList.contains("active"))
+          handleRedeem();
+      });
+
+      // Prevent forward navigation back into the app after logout/back
+      // Mark this page in history so we can detect when user navigates back to it
+      history.pushState({ page: "auth" }, "", window.location.href);
+      window.addEventListener("popstate", function (e) {
+        // User pressed back — ensure they land on login step, not success
+        showStep("step-login");
+      });
+
+      // If user arrived here via forward button from the success/redirect state,
+      // clear success step and show login
+      window.addEventListener("pageshow", function (e) {
+        // e.persisted = true means page was restored from bfcache (back/forward cache)
+        if (e.persisted) {
+          showStep("step-login");
+          clearAlerts();
+        }
+      });
+
+      function goToApp(e) {
+        e.preventDefault();
+        const href = document.getElementById("goToAppBtn").href;
+        if (href && href !== "#" && href !== window.location.href) {
+          window.location.replace(href);
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plans & Pricing — LeadX</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f7faf8;
+        --surface: #ffffff;
+        --left-bg: #0d2818;
+        --border: #ddeae3;
+        --border-dark: #1e3d2a;
+        --text: #0d1f14;
+        --text-inv: #e8f5ee;
+        --muted: #5a7a66;
+        --muted-inv: #7aaa8a;
+        --blue: #1d6fa4;
+        --blue-light: #e8f3fb;
+        --blue-dim: rgba(29, 111, 164, 0.12);
+        --green: #1a7a45;
+        --green-dim: rgba(26, 122, 69, 0.08);
+        --gold: #6ec6f5;
+        --gold-dim: rgba(110, 198, 245, 0.12);
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      /* ── Nav (dark green) ── */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 48px;
+        background: var(--left-bg);
+        border-bottom: 1.5px solid var(--border-dark);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        background: var(--blue);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        font-size: 16px;
+        font-weight: 900;
+        color: #fff;
+      }
+      .brand-name {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-inv);
+      }
+      .nav-back {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--muted-inv);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-back:hover {
+        color: var(--text-inv);
+      }
+
+      /* ── Hero ── */
+      .hero {
+        text-align: center;
+        padding: 80px 24px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at 50% 0%,
+            rgba(29, 111, 164, 0.06) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 100%,
+            rgba(26, 122, 69, 0.04) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 20px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        padding: 6px 14px;
+        border-radius: 100px;
+      }
+      .hero-eyebrow .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+      .hero h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(38px, 5vw, 62px);
+        font-weight: 900;
+        line-height: 1.06;
+        letter-spacing: -0.025em;
+        color: var(--text);
+        margin-bottom: 18px;
+        position: relative;
+        z-index: 1;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--blue);
+      }
+      .hero-sub {
+        font-size: 16px;
+        color: var(--muted);
+        line-height: 1.7;
+        max-width: 480px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── Cards Grid ── */
+      .cards-wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0 24px 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: stretch;
+      }
+      .plan-card {
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 18px;
+        padding: 36px 32px;
+        position: relative;
+        transition:
+          box-shadow 0.25s,
+          transform 0.25s;
+        animation: cardIn 0.5s ease both;
+        display: flex;
+        flex-direction: column;
+      }
+      .plan-card:hover {
+        box-shadow: 0 12px 40px rgba(13, 31, 20, 0.08);
+        transform: translateY(-3px);
+      }
+      .plan-card:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .plan-card:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      @keyframes cardIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .plan-card.premium {
+        background: var(--left-bg);
+        border-color: var(--border-dark);
+        color: var(--text-inv);
+      }
+      .plan-card.premium::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+        background:
+          radial-gradient(
+            circle at 80% 10%,
+            rgba(110, 198, 245, 0.12) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 20% 90%,
+            rgba(26, 92, 53, 0.4) 0%,
+            transparent 55%
+          );
+        pointer-events: none;
+      }
+
+      .plan-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 100px;
+        margin-bottom: 20px;
+      }
+      .plan-badge.trial {
+        background: var(--green-dim);
+        border: 1.5px solid rgba(26, 122, 69, 0.2);
+        color: var(--green);
+      }
+      .plan-badge.premium-badge {
+        background: rgba(110, 198, 245, 0.12);
+        border: 1.5px solid rgba(110, 198, 245, 0.3);
+        color: var(--gold);
+        position: relative;
+        z-index: 1;
+      }
+
+      .plan-name {
+        font-family: "Fraunces", serif;
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+        position: relative;
+        z-index: 1;
+      }
+      .plan-card.premium .plan-name {
+        color: var(--text-inv);
+      }
+      .plan-desc {
+        font-size: 14px;
+        line-height: 1.65;
+        color: var(--muted);
+        margin-bottom: 28px;
+        position: relative;
+        z-index: 1;
+        flex: 1;
+      }
+      .plan-card.premium .plan-desc {
+        color: var(--muted-inv);
+      }
+
+      .plan-price {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        margin-bottom: 6px;
+        position: relative;
+        z-index: 1;
+      }
+      .price-currency {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .price-amount {
+        font-family: "Fraunces", serif;
+        font-size: 52px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .plan-card.premium .price-amount {
+        color: var(--text-inv);
+      }
+      .plan-card.premium .price-currency {
+        color: var(--muted-inv);
+      }
+      .price-period {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .plan-card.premium .price-period {
+        color: var(--muted-inv);
+      }
+      .price-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 28px;
+        position: relative;
+        z-index: 1;
+      }
+      .plan-card.premium .price-note {
+        color: var(--muted-inv);
+      }
+
+      .plan-divider {
+        height: 1.5px;
+        background: var(--border);
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+      .plan-card.premium .plan-divider {
+        background: var(--border-dark);
+      }
+
+      .features-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+        position: relative;
+        z-index: 1;
+      }
+      .plan-card.premium .features-label {
+        color: var(--muted-inv);
+      }
+
+      .feature-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 1;
+      }
+      .feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--text);
+      }
+      .plan-card.premium .feature-item {
+        color: var(--text-inv);
+      }
+      .feature-check {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+        font-size: 10px;
+      }
+      .feature-check.included {
+        background: var(--green-dim);
+        border: 1.5px solid rgba(26, 122, 69, 0.25);
+        color: var(--green);
+      }
+      .plan-card.premium .feature-check.included {
+        background: rgba(110, 198, 245, 0.1);
+        border-color: rgba(110, 198, 245, 0.35);
+        color: var(--gold);
+      }
+      .feature-check.excluded {
+        background: rgba(90, 122, 102, 0.06);
+        border: 1.5px solid rgba(90, 122, 102, 0.15);
+        color: #b0c4b8;
+      }
+      .feature-item.dim {
+        opacity: 0.45;
+      }
+
+      .plan-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        border: none;
+        position: relative;
+        z-index: 1;
+      }
+      .plan-cta.ghost {
+        background: transparent;
+        color: var(--muted);
+        border: 1.5px solid var(--border);
+      }
+      .plan-cta.ghost:hover {
+        border-color: var(--muted);
+        color: var(--text);
+        transform: translateY(-1px);
+      }
+      .plan-cta.premium-cta {
+        background: linear-gradient(135deg, #6ec6f5 0%, #1d6fa4 100%);
+        color: #fff;
+      }
+      .plan-cta.premium-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 28px rgba(110, 198, 245, 0.35);
+      }
+
+      .popular-pill {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #6ec6f5, #1d6fa4);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 5px 16px;
+        border-radius: 100px;
+        white-space: nowrap;
+        z-index: 2;
+      }
+
+      .pricing-footer {
+        text-align: center;
+        padding-bottom: 60px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .pricing-footer a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .pricing-footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 640px) {
+        nav {
+          padding: 16px 20px;
+        }
+        .hero {
+          padding: 56px 20px 44px;
+        }
+        .cards-wrap {
+          grid-template-columns: 1fr;
+          padding: 0 20px 60px;
+          gap: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="brand" href="access-page.html">
+        <div class="brand-mark">L</div>
+        <span class="brand-name">LeadX</span>
+      </a>
+      <a class="nav-back" href="access-page.html">← Back to sign in</a>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <div class="dot"></div>
+        Simple, transparent pricing
+      </div>
+      <h1>Choose your<br /><em>plan</em></h1>
+      <p class="hero-sub">
+        Start with a free trial and upgrade anytime. No hidden fees, no
+        surprises.
+      </p>
+    </div>
+
+    <div class="cards-wrap">
+      <div class="plan-card">
+        <div class="plan-badge trial">✦ Free Trial</div>
+        <div class="plan-name">Trial</div>
+        <p class="plan-desc">
+          Try LeadX with a single access code. Submit a request and we'll send
+          your key via email once approved.
+        </p>
+        <div class="plan-price">
+          <span class="price-currency">$</span>
+          <span class="price-amount">0</span>
+          <span class="price-period">/ 14 days</span>
+        </div>
+        <p class="price-note">Expires after 14 days. No auto-charge.</p>
+        <div class="plan-divider"></div>
+        <div class="features-label">What's included</div>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Single time-limited access code</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>14-day access window</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Manual approval process</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Email-based code delivery</span>
+          </li>
+          <li class="feature-item dim">
+            <div class="feature-check excluded">✕</div>
+            <span>Instant access — no waiting for approval</span>
+          </li>
+          <li class="feature-item dim">
+            <div class="feature-check excluded">✕</div>
+            <span>Renewable &amp; extendable access codes</span>
+          </li>
+          <li class="feature-item dim">
+            <div class="feature-check excluded">✕</div>
+            <span>Multiple active codes at once</span>
+          </li>
+          <li class="feature-item dim">
+            <div class="feature-check excluded">✕</div>
+            <span>Priority support &amp; dedicated onboarding</span>
+          </li>
+        </ul>
+        <a class="plan-cta ghost" href="access-page.html">Get started free</a>
+      </div>
+
+      <div class="plan-card premium">
+        <div class="popular-pill">⭐ Most Popular</div>
+        <div class="plan-badge premium-badge">👑 Premium</div>
+        <div class="plan-name">Premium</div>
+        <p class="plan-desc">
+          Skip the queue. Get instant, flexible access codes you can manage,
+          renew, and share with your team.
+        </p>
+        <div class="plan-price">
+          <span class="price-currency">$</span>
+          <span class="price-amount" style="color: #6ec6f5"> 20 </span>
+          <span class="price-period">/ month</span>
+        </div>
+        <p class="price-note">Billed monthly. Cancel anytime.</p>
+        <div class="plan-divider"></div>
+        <div class="features-label">Everything in Trial, plus</div>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span><strong>Instant access</strong> — no approval wait</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Renewable &amp; extendable access codes</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Multiple active codes at once</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Longer access windows (30, 60, 90 days)</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Code usage &amp; expiry dashboard</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Revoke or reissue codes anytime</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Bulk code generation for teams</span>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check included">✓</div>
+            <span>Priority support &amp; dedicated onboarding</span>
+          </li>
+        </ul>
+        <a class="plan-cta premium-cta" href="subscription-page.html"
+          >👑 Subscribe to Premium</a
+        >
+      </div>
+    </div>
+
+    <div class="pricing-footer">
+      Need a custom plan for larger teams?
+      <a href="mailto:sales@leadx.io">Talk to sales →</a>
+    </div>
+  </body>
+</html>
